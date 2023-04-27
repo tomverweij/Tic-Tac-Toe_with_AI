@@ -1,13 +1,13 @@
+import random
+
 class TicTacToeBoard:
     """Draws the ancient game of TicTacToe"""
 
     def __init__(self):
-        b = input('Enter the cells:')
-        # check initial state input
-        if not all((c in 'XO_') for c in b)\
-                or not len(b) == 9:
-            print('Incorrect initial state - must contain only ''X'',''O'',''_'' and be 9 characters long')
-        self.board_list = [list(b[0:3]), list(b[3:6]), list(b[6:9])]
+        self.has_next_turn = 'X'  # = human
+        self.board_list = [['_', '_', '_'], \
+                           ['_', '_', '_'], \
+                           ['_', '_', '_']]
         print(self.get_board())
 
     def get_board(self):
@@ -19,7 +19,11 @@ class TicTacToeBoard:
 
     def accept_move(self):
         while True:
-            m = input('Enter the coordinates:')
+            if self.has_next_turn == 'X':
+                m = input('Enter the coordinates:')
+            else:
+                m = str(random.randrange(1, 4, 1)) + ' ' + str(random.randrange(1, 4, 1))
+
             # check move input
             try:
                 x = int(m.split()[0])
@@ -28,11 +32,16 @@ class TicTacToeBoard:
                     print('Coordinates should be from 1 to 3!')
                     continue
                 elif self.board_list[x-1][y-1] != '_':
-                    print('This cell is occupied! Choose another one!')
+                    if self.has_next_turn == 'X':
+                        print('This cell is occupied! Choose another one!')
                     continue
                 else:
                     self.board_list[x-1][y-1] = self.get_player()
-                    # self.assess_state()
+                    if self.has_next_turn == 'X':
+                        self.has_next_turn = 'O'
+                    else:
+                        print('Making move level "easy"')
+                        self.has_next_turn = 'X'
                     break
             except ValueError:
                 print('You should enter numbers!')
@@ -89,6 +98,7 @@ class TicTacToeBoard:
 
 
 ttt = TicTacToeBoard()
-ttt.accept_move()
-print(ttt.get_board())
+while ttt.get_score() == 'Game not finished':
+    ttt.accept_move()
+    print(ttt.get_board())
 print(ttt.get_score())

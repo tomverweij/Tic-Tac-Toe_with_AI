@@ -187,6 +187,21 @@ files:
     if __name__ == '__main__':
         TicTacToeTests().run_tests()
   learner_created: false
+- name: input1.txt
+  visible: true
+  text: |+
+    _XXOO_OX_
+    3 1
+    one
+    one three
+    4 1
+    1 1
+
+
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/7440#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Thu, 27 Apr 2023 21:44:20 UTC"
 record: -1
