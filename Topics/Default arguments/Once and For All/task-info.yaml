@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: There can be only one list object in your program and it mutates.
+- text: Default parameters are evaluated only in the function definition.
+- text: "Mutable objects cannot be used as default values, your code will crash."
+files:
+- name: main.py
+  visible: true
+  text: |+
+    #  You can experiment here, it won’t be checked
+
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10298#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: "Mon, 01 May 2023 21:24:36 UTC"
+record: -1
+selected_options:
+- 1
+local_check: false

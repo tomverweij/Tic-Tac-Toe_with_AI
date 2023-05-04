@@ -1,0 +1,13 @@
+type: code
+files:
+- name: main.py
+  visible: true
+  text: names = input().split()
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13912#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: "Thu, 04 May 2023 21:48:13 UTC"
+record: -1
+submission_language: python3
