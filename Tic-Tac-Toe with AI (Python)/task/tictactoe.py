@@ -3,10 +3,10 @@ import random
 class TicTacToeBoard:
     """Draws the ancient game of TicTacToe"""
 
-    def __init__(self):
-        self.has_next_turn = 'X'  # = human
-        self.board_list = [['_', '_', '_'], \
-                           ['_', '_', '_'], \
+    def __init__(self, players):
+        self.players = players
+        self.board_list = [['_', '_', '_'],
+                           ['_', '_', '_'],
                            ['_', '_', '_']]
         print(self.get_board())
 
@@ -17,11 +17,11 @@ class TicTacToeBoard:
         board += '---------'
         return board
 
-    def accept_move(self):
+    def accept_move(self, player):
         while True:
-            if self.has_next_turn == 'X':
+            if self.players[player] == 'user':
                 m = input('Enter the coordinates:')
-            else:
+            else: # later this will have more levels, now by default 'easy'
                 m = str(random.randrange(1, 4, 1)) + ' ' + str(random.randrange(1, 4, 1))
 
             # check move input
@@ -32,27 +32,16 @@ class TicTacToeBoard:
                     print('Coordinates should be from 1 to 3!')
                     continue
                 elif self.board_list[x-1][y-1] != '_':
-                    if self.has_next_turn == 'X':
+                    if self.players[player] == 'user':
                         print('This cell is occupied! Choose another one!')
                     continue
                 else:
-                    self.board_list[x-1][y-1] = self.get_player()
-                    if self.has_next_turn == 'X':
-                        self.has_next_turn = 'O'
-                    else:
+                    self.board_list[x - 1][y - 1] = player
+                    if self.players[player] == 'easy':
                         print('Making move level "easy"')
-                        self.has_next_turn = 'X'
                     break
             except ValueError:
                 print('You should enter numbers!')
-
-    def get_player(self):
-        xx = 0
-        oo = 0
-        for row in self.board_list:
-            xx += row.count('X')
-            oo += row.count('O')
-        return 'X' if xx == oo else 'O'
 
     def is_win(self, xo):
         # check horizontal for a win of xo
@@ -96,9 +85,31 @@ class TicTacToeBoard:
         else:
             return 'Draw'
 
+class Menu():
 
-ttt = TicTacToeBoard()
-while ttt.get_score() == 'Game not finished':
-    ttt.accept_move()
-    print(ttt.get_board())
-print(ttt.get_score())
+    def __init__(self):
+        while True:
+            try:
+                action = input('Input command:').split()
+                if action[0] == 'exit':
+                    break
+
+                valid_playertypes = ['user', 'easy']
+                if action[0] == 'start' and set(action[1:2]).issubset(valid_playertypes):
+                    players = {'X': action[1], 'O': action[2]}
+                    ttt = TicTacToeBoard(players)
+                    next_player = 'X'
+                    while ttt.get_score() == 'Game not finished':
+                        ttt.accept_move(next_player)
+                        if next_player == 'X':
+                            next_player = 'O'
+                        else:
+                            next_player = 'X'
+                        print(ttt.get_board())
+                    print(ttt.get_score())
+            except:
+                print('Bad parameters!')
+                continue
+
+play = Menu()
+
